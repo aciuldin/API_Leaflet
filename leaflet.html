@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGIS - Unidade 2</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="leaflet.ajax.min.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+    <div id="map"></div>       
+
+    <script>
+       var map = L.map('map').setView([-19.925999, -43.994024], 17);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Marcador
+        var marcador = L.marker([-19.925999, -43.994024]).addTo(map);
+        
+        // Popup
+        var conteudo = '<h1>PUC Minas Virtual</h1>'+
+              '<p>Av. Trinta e Um de Março, nº 1020</p>'+
+              '<p>Bairro Dom Cabral</p>'+
+              '<p>Belo Horizonte - MG </p>'+
+              '<p>CEP: 30535-000</p>'+
+              '<p>Central de Informações: (31)3319-4444</p>';
+        marcador.bindPopup(conteudo);
+        
+        // Linha
+        var latlngs = [
+            [-19.9244765,-43.9914143],
+            [-19.9273108,-43.9877343],
+            [-19.9276033,-43.9880884],
+            [-19.9279967,-43.9882064]
+        ];
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+        
+        
+        // Poligono
+        L.polygon([
+            [-19.926108,-43.9938283],
+            [-19.9257802,-43.9942333],
+            [-19.9261736,-43.9945793],    
+            [-19.9264989,-43.9941609],    
+            [-19.926108,-43.9938283]
+	    ], {color: 'yellow'}).addTo(map).bindPopup("Lote PUC Virtual");
+        
+        
+        // GeoJSON
+        var geojsonLayer = new L.GeoJSON.AJAX('puc.geojson');       
+        geojsonLayer.addTo(map);
+        
+    </script>
+</body>
+</html>
